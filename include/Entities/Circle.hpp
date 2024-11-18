@@ -8,6 +8,9 @@ class Circle : public GameObject, public Rigidbody, public Entity
 {
 public:
     sf::CircleShape property;
+    float density;
+    float pressure;
+    sf::Vector2f force;
 
 private:
     void initVariables();

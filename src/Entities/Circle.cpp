@@ -10,6 +10,9 @@ Circle::Circle(float radius)
     this->initVariables();
     this->property.setRadius(radius);
     this->property.setOrigin(sf::Vector2f(radius, radius));
+    this->density = 0.f;
+    this->pressure = 0.f;
+    this->force = sf::Vector2f(0.f, 0.f);
 }
 
 Circle::Circle(float radius, sf::Vector2f position)
@@ -18,6 +21,9 @@ Circle::Circle(float radius, sf::Vector2f position)
     this->property.setRadius(radius);
     this->property.setOrigin(sf::Vector2f(radius, radius));
     this->property.setPosition(position);
+    this->density = 0.f;
+    this->pressure = 0.f;
+    this->force = sf::Vector2f(0.f, 0.f);
 }
 
 void Circle::initVariables()

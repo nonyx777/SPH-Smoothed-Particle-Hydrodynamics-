@@ -37,6 +37,10 @@ void ConfigWindow::update(float dt)
         GLOBAL::display_grid = !GLOBAL::display_grid;
     ImGui::Text("Display Grid: %s", GLOBAL::display_grid ? "True" : "False");
 
+    //initial amount of particles
+    ImGui::Text("Parameters");
+    ImGui::InputInt("Amount", &GLOBAL::amount);
+
     ImGui::End();
 }
 

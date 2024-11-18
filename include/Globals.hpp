@@ -9,4 +9,5 @@ namespace GLOBAL
     inline int cell_size = 10;
     inline bool display_grid = false;
     inline float fps = 0.f;
+    inline int amount = 300;
 }
