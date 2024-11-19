@@ -22,6 +22,11 @@ Scene *Scene::getInstance()
 
 void Scene::update(float dt)
 {
+}
+
+void Scene::update(sf::Vector2f &mousePos, float dt)
+{
+    pushParticles(mousePos);
     computeDensityPressure();
     computeForce();
     integrate();
@@ -40,7 +45,7 @@ void Scene::initSPH(int amount)
         float x = randomFloat(0.f, GLOBAL::window_width);
         float y = randomFloat(0.f, GLOBAL::window_height);
 
-        Circle particle = Circle(10.f, sf::Vector2f(x, y));
+        Circle particle = Circle(1.f, sf::Vector2f(x, y));
         particles.push_back(particle);
     }
 }
@@ -121,6 +126,19 @@ void Scene::integrate()
         {
             p.linearVelocity.y *= Constants::BOUND_DAMPING;
             p.property.setPosition(sf::Vector2f(p.property.getPosition().x, GLOBAL::window_height - Constants::EPS));
+        }
+    }
+}
+
+void Scene::pushParticles(sf::Vector2f &mousePos)
+{
+    for (Circle &p : particles)
+    {
+        if (Math::_length(mousePos - p.property.getPosition()) > Constants::H)
+            continue;
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+            p.property.move(sf::Vector2f(0.f, 1.f) * -3.f);
         }
     }
 }

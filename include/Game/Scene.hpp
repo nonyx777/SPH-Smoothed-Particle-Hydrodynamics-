@@ -53,6 +53,7 @@ public:
     void integrate();
     void computeDensityPressure();
     void computeForce();
+    void pushParticles(sf::Vector2f &mousePos);
 
     // helper
     float randomFloat(const float min, const float max)
