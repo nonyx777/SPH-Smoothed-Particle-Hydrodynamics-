@@ -40,13 +40,25 @@ void Scene::render(sf::RenderTarget *target)
 
 void Scene::initSPH(int amount)
 {
-    for (int i = 0; i < amount; i++)
-    {
-        float x = randomFloat(0.f, GLOBAL::window_width);
-        float y = randomFloat(0.f, GLOBAL::window_height);
+    int a = sqrt(amount);
+    float spacing = 5.f;
 
-        Circle particle = Circle(1.f, sf::Vector2f(x, y));
-        particles.push_back(particle);
+    std::cout << amount << std::endl;
+    std::cout << a << std::endl;
+
+    int j_initial = GLOBAL::window_height / 3.f + 50.f;
+    int i_initial = GLOBAL::window_width / 3.f + 50.f;
+
+    std::cout << j_initial << std::endl;
+    std::cout << i_initial << std::endl;
+
+    for (int j = j_initial; j < j_initial + (a * spacing); j += spacing)
+    {
+        for (int i = i_initial; i < i_initial + (a * spacing); i += spacing)
+        {
+            Circle particle = Circle(1.f, sf::Vector2f(i, j));
+            particles.push_back(particle);
+        }
     }
 }
 
