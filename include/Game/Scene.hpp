@@ -12,8 +12,8 @@ namespace Constants
 {
     //solver parameters
     const sf::Vector2f GRAVITY = sf::Vector2f(0.f, 10.f);
-    const float REST_DENS = 300.f;
-    const float GAS_CONST = 1000.f;
+    const float REST_DENS = 50.f;
+    const float GAS_CONST = 2000.f;
     const float H = 16.f;
     const float HSQ = H * H;
     const float MASS = 2.5f;
@@ -53,7 +53,7 @@ public:
     void integrate();
     void computeDensityPressure();
     void computeForce();
-    void pushParticles(sf::Vector2f &mousePos);
+    void pullParticles(sf::Vector2f &mousePos);
 
     // helper
     float randomFloat(const float min, const float max)

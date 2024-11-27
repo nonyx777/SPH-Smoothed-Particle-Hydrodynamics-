@@ -26,9 +26,9 @@ void Scene::update(float dt)
 
 void Scene::update(sf::Vector2f &mousePos, float dt)
 {
-    pushParticles(mousePos);
     computeDensityPressure();
     computeForce();
+    pullParticles(mousePos);
     integrate();
 }
 
@@ -137,15 +137,28 @@ void Scene::integrate()
     }
 }
 
-void Scene::pushParticles(sf::Vector2f &mousePos)
+void Scene::pullParticles(sf::Vector2f &mousePos)
 {
+    float restLength = 30.f;
+    float grabRadius = 100.f;
+    float springStrength = 100.f;
+    float dampingFactor = 0.9f;
     for (Circle &p : particles)
     {
-        if (Math::_length(mousePos - p.property.getPosition()) > Constants::H)
+        float distance = Math::_length(mousePos - p.property.getPosition());
+        if (distance > grabRadius)
             continue;
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
-            p.property.move(sf::Vector2f(0.f, 1.f) * -3.f);
+            //spring connection
+            sf::Vector2f dir = mousePos - p.property.getPosition();
+            dir = Math::_normalize(dir);
+            sf::Vector2f springForce = springStrength * (distance - restLength) * dir;
+            //damping
+            float velocityAlongSpring = Math::_dot(p.linearVelocity, dir);
+            sf::Vector2f dampingForce = -dampingFactor * velocityAlongSpring * dir;
+
+            p.force = springForce + dampingForce;
         }
     }
 }
