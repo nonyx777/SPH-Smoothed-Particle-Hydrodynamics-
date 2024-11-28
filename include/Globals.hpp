@@ -10,4 +10,5 @@ namespace GLOBAL
     inline bool display_grid = false;
     inline float fps = 0.f;
     inline int amount = 300;
+    inline int particle_radius = 1;
 }

@@ -40,6 +40,8 @@ void ConfigWindow::update(float dt)
     //initial amount of particles
     ImGui::Text("Parameters");
     ImGui::InputInt("Amount", &GLOBAL::amount);
+    //particle size
+    ImGui::InputInt("Particle Size", &GLOBAL::particle_radius);
 
     ImGui::End();
 }

@@ -12,7 +12,7 @@ namespace Constants
 {
     //solver parameters
     const sf::Vector2f GRAVITY = sf::Vector2f(0.f, 10.f);
-    const float REST_DENS = 50.f;
+    const float REST_DENS = 100.f;
     const float GAS_CONST = 2000.f;
     const float H = 16.f;
     const float HSQ = H * H;
@@ -62,5 +62,12 @@ public:
         std::mt19937 generator(rd());
         std::uniform_real_distribution<float> distribution(min, max);
         return distribution(generator);
+    }
+    void clampVector(sf::Vector2f &vec, float maxSpeed)
+    {
+        if(Math::_length(vec) < maxSpeed)
+            return;
+        sf::Vector2f norm = Math::_normalize(vec);
+        vec = norm * maxSpeed;
     }
 };

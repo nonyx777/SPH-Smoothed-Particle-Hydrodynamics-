@@ -26,6 +26,8 @@ void Scene::update(float dt)
 
 void Scene::update(sf::Vector2f &mousePos, float dt)
 {
+    for(Circle &p : this->particles)
+        p.force = sf::Vector2f(0.f, 0.f);
     computeDensityPressure();
     computeForce();
     pullParticles(mousePos);
@@ -50,7 +52,7 @@ void Scene::initSPH(int amount)
         for (int i = i_initial; i < i_initial + (a * Constants::H); i += Constants::H)
         {
             float jitter = randomFloat(-1.f, 1.f);
-            Circle particle = Circle(1.f, sf::Vector2f(i + jitter, j));
+            Circle particle = Circle(GLOBAL::particle_radius, sf::Vector2f(i + jitter, j));
             particles.push_back(particle);
         }
     }
@@ -141,8 +143,8 @@ void Scene::pullParticles(sf::Vector2f &mousePos)
 {
     float restLength = 30.f;
     float grabRadius = 100.f;
-    float springStrength = 100.f;
-    float dampingFactor = 0.9f;
+    float springStrength = 1000.f;
+    float dampingFactor = 5.f;
     for (Circle &p : particles)
     {
         float distance = Math::_length(mousePos - p.property.getPosition());
@@ -157,8 +159,7 @@ void Scene::pullParticles(sf::Vector2f &mousePos)
             //damping
             float velocityAlongSpring = Math::_dot(p.linearVelocity, dir);
             sf::Vector2f dampingForce = -dampingFactor * velocityAlongSpring * dir;
-
-            p.force = springForce + dampingForce;
+            p.force += springForce + dampingForce;
         }
     }
 }
