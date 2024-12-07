@@ -108,7 +108,7 @@ void Scene::integrate()
 {
     for (Circle &p : particles)
     {
-        p.linearVelocity += 0.5f * (p.force / p.density) * Constants::DT;
+        p.linearVelocity += (p.force / p.density) * Constants::DT;
         p.property.move(p.linearVelocity * Constants::DT);
 
         // boundary
@@ -135,7 +135,6 @@ void Scene::integrate()
             p.linearVelocity.y *= Constants::BOUND_DAMPING;
             p.property.setPosition(sf::Vector2f(p.property.getPosition().x, GLOBAL::window_height - Constants::EPS));
         }
-        p.linearVelocity += 0.5f * (p.force / p.density) * Constants::DT;
     }
 }
 
@@ -143,8 +142,8 @@ void Scene::pullParticles(sf::Vector2f &mousePos)
 {
     float restLength = 30.f;
     float grabRadius = 100.f;
-    float springStrength = 1000.f;
-    float dampingFactor = 5.f;
+    float springStrength = 30.f;
+    float dampingFactor = 2.f;
     for (Circle &p : particles)
     {
         float distance = Math::_length(mousePos - p.property.getPosition());
